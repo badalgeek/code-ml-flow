@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "code-ml-flow"
+version = "0.1.0"
+description = ""
+authors = ["Badal Singh <badal@truereach.ai>"]
+readme = "README.md"
+packages = [{include = "code_ml_flow"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "*"
+httpx = "*"
+uvicorn = "*"
+dependency_injector = "*"
+pyyaml = "*"
+sqlalchemy = "*"
+psycopg2-binary = "*"
+alembic = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

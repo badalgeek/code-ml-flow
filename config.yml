@@ -1,0 +1,2 @@
+db:
+  url: "postgresql://postgres@localhost:5432/ai-ml-flow"
