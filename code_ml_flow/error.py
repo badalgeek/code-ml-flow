@@ -9,3 +9,6 @@ class NotFoundError(Exception):
 class UserNotFoundError(NotFoundError):
 
     entity_name: str = "User"
+
+class InvalidTokenError(Exception):
+    pass

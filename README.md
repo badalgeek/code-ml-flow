@@ -1,4 +1,4 @@
 ```
-alembic revision -m "Init database"
+alembic revision --autogenerate -m "Init database"
 alembic upgrade head
 ```

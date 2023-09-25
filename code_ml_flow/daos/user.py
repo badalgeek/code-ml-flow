@@ -11,24 +11,17 @@ class UserDAO:
     def __init__(self, session_factory: Callable[..., AbstractContextManager[Session]]) -> None:
         self.session_factory = session_factory
 
-    def get_all(self) -> Iterator[User]:
+    def get_user_by_email(self, email: str) -> User:
         with self.session_factory() as session:
-            return session.query(User).all()
-
-    def get_by_id(self, user_id: int) -> User:
-        with self.session_factory() as session:
-            user = session.query(User).filter(User.id == user_id).first()
-            if not user:
-                raise UserNotFoundError(user_id)
+            user = session.query(User).filter(User.email_id == email).first()
             return user
 
-    def add(self, email: str, password: str, is_active: bool = True) -> User:
+    def create_user(self, email: str) -> User:
         with self.session_factory() as session:
-            user = User(email=email, hashed_password=password, is_active=is_active)
+            user = User(email_id=email)
             session.add(user)
             session.commit()
-            session.refresh(user)
-            return user
+            return user.id
 
     def delete_by_id(self, user_id: int) -> None:
         with self.session_factory() as session:

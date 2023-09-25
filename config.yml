@@ -1,2 +1,8 @@
 db:
   url: "postgresql://postgres@localhost:5432/ai-ml-flow"
+github:
+  client_id: "Iv1.5d125b279ca698ff"
+  client_secret: "FILL"
+  redirect_url: "http://localhost:8000/callback"
+auth:
+  jwt_secret_key: "a352ea3aa9ad74f73dcd75949e08cb9f8cae167e9fe990417db355058ff04cc9"
