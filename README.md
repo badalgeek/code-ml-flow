@@ -7,8 +7,8 @@ alembic upgrade head
 
 ## Assumption
 * Read:Write ratio greater than 20:1
-* * Most of the read traffic only reads the latest 20-40 comments of a repo.
-Since keys in JSON will have high variance.(..??..)
+* Most of the read traffic only reads the latest 20-40 comments of a repo.
+* Since keys in JSON will have high variance. (..??..)
 
 ## Database Schema
 
@@ -20,11 +20,11 @@ Since keys in JSON will have high variance.(..??..)
 
 ## System Explained
 * System will integrate with git providers using webhooks. Webhook will save the event. An async worker will pick unprocessed commit events, fetch metric file, flatten them, and save them in the database. If a webhook is not provided a poller will be required.
-* When user adds a repo for the first time, an event will be added to the event table and an async worker will pick the event and process old commits in batches.
+* When a user adds a repo for the first time, an event will be added to the event table and an async worker will pick the event and process old commits in batches.
 
 ## Choices Explained:
 Database Choice: 
-* Postgres is chosen as database for small and mid scale. AWS Athena can scale up to 20 read replicas and 128 TB of data.
+* Postgres is chosen as a database for small and mid-scale. AWS Athena can scale up to 20 read replicas and 128 TB of data.
 * Read Write ratio of this system exceeds 20:1 and reads don't require high consistency, which means db can be scaled using read replicas for reading and master for writing. 
 * Since most of the users will only see top commits which means postgres caching will further improve the reads. In the read replica setting, the cache hit ratio can be boosted by using consistent hashing to send queries of one repo to one read replica. It's a very low effort since actually data won't be partitioned.
 
