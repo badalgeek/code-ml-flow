@@ -51,7 +51,8 @@ class GitCommit(Base):
 
     id = Column(Integer, primary_key=True)
     branch_name = Column(String, nullable=False)
-    repository_id = Column(Integer, ForeignKey('git_repositories.id'))
+    repository_id = Column(Integer, ForeignKey('git_repositories.id'), nullable=False)
+    metric_file_id = Column(Integer, ForeignKey('metric_files.id'))
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
     repository = relationship('GitRepository', back_populates='commits')
@@ -63,8 +64,7 @@ class MetricFile(Base):
 
     id = Column(Integer, primary_key=True)
     file_hash = Column(String, nullable=False)
-    repository_id = Column(Integer, ForeignKey('git_repositories.id'))
-    commit_id = Column(Integer, ForeignKey('git_commits.id'))
+    repository_id = Column(Integer, ForeignKey('git_repositories.id'), nullable=False)
     file_data = Column(Text, nullable=False)  # Assuming JSON data is stored as text
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 

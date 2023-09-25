@@ -1,0 +1,34 @@
+<!-- templates/repository.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repository</title>
+</head>
+<body>
+    <h1>Repository: {{ repository }}</h1>
+    <a href="/repo/sync?git_account_id={{ git_account_id }}&repo_id={{ repo_id }}">Sync</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Commit ID</th>
+                <th>Branch Name</th>
+                <th>Created At</th>
+                <th>Metric Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for commit in commits %}
+            <tr>
+                <td>{{ commit[0].id }}</td>
+                <td>{{ commit[0].branch_name }}</td>
+                <td>{{ commit[0].created_at }}</td>
+                <td>{{ commit[1].file_data }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

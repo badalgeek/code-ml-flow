@@ -28,7 +28,7 @@ def login(config: Configuration = Depends(Provide[Container.config])):
 async def callback(code: str,
                    config: Configuration = Depends(Provide[Container.config]), 
                    user_dao: UserDAO = Depends(Provide[Container.user_dao]),
-                   git_account_dao: GitAccountDAO = Depends(Provide[Container.git_provider_dao])):
+                   git_account_dao: GitAccountDAO = Depends(Provide[Container.git_account_dao])):
     async with httpx.AsyncClient() as client:
         token_response = await client.post(
             TOKEN_URL,

@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title>FastAPI</title>
+    </head>
+    <body>
+        <h1>Welcome User!</h1>
+        <p><a href="/repo/add_repo_list">Add Repository</a></p>
+        <h2>Your Repositories:</h2>
+        <ul>
+            {% for repo in repositories %}
+                <li><a href="/repo/show?git_account_id={{ repo.git_account_id }}&repo_id={{ repo.id }}">{{ repo.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>

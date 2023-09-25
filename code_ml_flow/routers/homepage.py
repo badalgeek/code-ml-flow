@@ -4,7 +4,7 @@ from dependency_injector.wiring import inject, Provide
 from dependency_injector.providers import Configuration
 
 from code_ml_flow.token_utils import validate_jwt_token
-
+from code_ml_flow.templates.templates import templates
 from code_ml_flow.containers import Container
 from code_ml_flow.error import InvalidTokenError
 from code_ml_flow.daos import UserDAO, GitRepositoryDAO
@@ -17,19 +17,9 @@ async def home(request: Request,
                config: Configuration = Depends(Provide[Container.config]),
                git_repository_dao: GitRepositoryDAO = Depends(Provide[Container.git_repository_dao])):
     try:
-        validate_jwt_token(request.cookies.get('access_token'), config)
-        html_content = """
-        <html>
-            <head>
-                <title>FastAPI</title>
-            </head>
-            <body>
-                <h1>Welcome User!</h1>
-                <p><a href="/repo/add-new">Add Repository</a></p>
-            </body>
-        </html>
-        """
-        return HTMLResponse(content=html_content)
+        user_id = validate_jwt_token(request.cookies.get('access_token'), config)
+        repositories = git_repository_dao.get_repositories_for_user(user_id)
+        return templates.TemplateResponse("homepage.jinja", {"request": request, "repositories": repositories})
     except InvalidTokenError as err:
         print(err)
         html_content = """
